@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './Components/LoginPage';
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import QuestionManagement from "./QuestionManagement";
+import QuestionManagement from "./Components/QuestionManagement";
 import AdminHome from './Components/AdminHome';
-import AnswerManagement from './AnswerManagement';
+import AnswerManagement from './Components/AnswerManagement';
 import SubmittedResult from './Components/SubmittedResult';
 
 function App() {
