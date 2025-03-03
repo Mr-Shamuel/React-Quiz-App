@@ -1,24 +1,77 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginPage from './Components/LoginPage';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import QuestionManagement from "./QuestionManagement";
+import AdminHome from './Components/AdminHome';
+import AnswerManagement from './AnswerManagement';
+import SubmittedResult from './Components/SubmittedResult';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const [quizStatus,setQuizStatus]=useState({
+    quizCreated:false,
+    quizSubmitted:false,
+  })
+
+  // Load user from local storage
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+
+    const storedQuestions = JSON.parse(localStorage.getItem("questions")) || [];
+    const storedAnswers = JSON.parse(localStorage.getItem("answers")) || {};
+    const quizStatus =JSON.parse(localStorage.getItem("quizStatus")) || {};
+    setQuestions(storedQuestions);
+    setAnswers(storedAnswers);
+    setQuizStatus(quizStatus);
+  }, []);
+
+  // Save data to local storage
+  useEffect(() => {
+    localStorage.setItem("questions", JSON.stringify(questions));
+    localStorage.setItem("answers", JSON.stringify(answers));
+    localStorage.setItem("quizStatus", JSON.stringify(quizStatus));
+  }, [questions, answers,quizStatus]);
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="container mt-3">
+        {user && (
+          <div className="d-flex justify-content-between align-items-center">
+            <h2>Welcome, {user.role === "admin" ? "Admin" : "User"}</h2>
+            <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+          </div>
+        )}
+
+        <Routes>
+          {/* Login Page */}
+          <Route path="/" element={user ? <Navigate to={`/${user.role}`} /> : <LoginPage setUser={setUser} />} />
+
+          {/* Admin Dashboard */}
+      
+          <Route path="/admin" element={user?.role === "admin" ? <AdminHome  questions={questions} setQuestions={setQuestions} setAnswers={setAnswers} /> : <Navigate to="/" />} />
+          <Route path="/create-quiz" element={user?.role === "admin" ? <QuestionManagement questions={questions} setQuestions={setQuestions} setAnswers={setAnswers} setQuizStatus={setQuizStatus} quizStatus={quizStatus} /> : <Navigate to="/" />} />
+          <Route path="/submitted-results" element={user?.role === "admin" ? <SubmittedResult questions={questions} setQuestions={setQuestions} setAnswers={setAnswers} setQuizStatus={setQuizStatus} quizStatus={quizStatus} /> : <Navigate to="/" />} />
+
+          {/* User Dashboard */}
+          <Route path="/user" element={user?.role === "user" ? <AnswerManagement questions={questions} answers={answers} setAnswers={setAnswers}  setQuizStatus={setQuizStatus} quizStatus={quizStatus}/> : <Navigate to="/" />} />
+
+          {/* 404 Page */}
+          <Route path="*" element={<div><h3>404 - Page Not Found</h3></div>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
