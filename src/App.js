@@ -5,7 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import QuestionManagement from "./Components/QuestionManagement";
 import AdminHome from './Components/AdminHome';
 import AnswerManagement from './Components/AnswerManagement';
-import SubmittedResult from './Components/SubmittedResult';
+import SubmittedResult from './Components/SubmittedResult'; 
+import Swal from 'sweetalert2';
+import CommonToastFunctions from './Common/CommonToastFunctions';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,13 +42,31 @@ function App() {
 
   // Handle logout
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
+  
+    Swal.fire({
+      title: "Are you sure you want to log out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("user");
+        setUser(null);
+        CommonToastFunctions("warning","Successfully logged out"); 
+      }
+    }).catch((err) => {
+      console.log(err, "err");
+    });
+ 
+  
   };
 
   return (
     <Router>
-      <div className="container mt-3">
+      <div className="container">
         {user && (
           <div className="d-flex justify-content-between align-items-center">
             <h2>Welcome, {user.role === "admin" ? "Admin" : "User"}</h2>
