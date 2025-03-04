@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import AnswerItem from "./AnswerItem";
+import CommonToastFunctions from "../Common/CommonToastFunctions";
+import Swal from "sweetalert2";
+import CommonConfetti from "../Common/CommonConfetti";
 
 function AnswerManagement({
   questions,
@@ -9,24 +12,44 @@ function AnswerManagement({
   setQuizStatus,
 }) {
   const [newAnswer, setNewAnswer] = useState({});
+  const [submitAns,setSubmitAns]=useState(false);
 
   const submitAnswer = (qid) => {
     if (newAnswer[qid]?.trim()) {
       const prevAnswers = answers[qid] || [];
       setAnswers({ ...answers, [qid]: [...prevAnswers, newAnswer[qid]] });
       setNewAnswer({ ...newAnswer, [qid]: "" });
+      CommonToastFunctions("success", "Answer Added");
     }
   };
 
-  const handleSubmitQuiz = () => {
-    setQuizStatus({ ...quizStatus, quizSubmitted: true });
-    localStorage.setItem(
-      "fullquiz",
-      JSON.stringify({
-        questionsList: questions,
-        answersList: answers,
-      })
-    );
+  const handleSubmitQuiz = () => { 
+    setSubmitAns(false);
+    Swal.fire({
+      title: "Submit Quiz?",
+      text: "Are you sure you want to Submit quiz?",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setQuizStatus({ ...quizStatus, quizSubmitted: true });
+        localStorage.setItem(
+          "fullquiz",
+          JSON.stringify({
+            questionsList: questions,
+            answersList: answers,
+          })
+        );
+        CommonToastFunctions("success", "Quiz Submitted successfully!");
+        setSubmitAns(true);
+      }
+    }).catch((err) => {
+      console.log(err, "err");
+    });
   };
 
   return (
@@ -35,7 +58,7 @@ function AnswerManagement({
         <h4 className="mb-4 text-center text-primary">
           Answer Questions
           <button className="btn btn-success ms-3" onClick={handleSubmitQuiz}>
-            Submit Quiz
+            {submitAns ?"Submit Again" : "Submit Quiz"}
           </button>
         </h4>
 
@@ -84,6 +107,10 @@ function AnswerManagement({
       {quizStatus?.quizCreated == false && (
         <h4 className="text-danger text-center">No Quiz Created</h4>
       )}
+
+      {
+        submitAns  && <CommonConfetti/>
+      }
     </div>
   );
 }

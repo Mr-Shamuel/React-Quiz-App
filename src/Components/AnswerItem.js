@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CommonToastFunctions from "../Common/CommonToastFunctions";
 
 function AnswerItem({ qid, ans, index, answers, setAnswers }) {
   const [editingAnswer, setEditingAnswer] = useState(false);
@@ -9,6 +10,8 @@ function AnswerItem({ qid, ans, index, answers, setAnswers }) {
     updatedAnswers[index] = editedAnswerText;
     setAnswers({ ...answers, [qid]: updatedAnswers });
     setEditingAnswer(false);
+
+    CommonToastFunctions("info", "Updated successfully!");
   };
 
   return (

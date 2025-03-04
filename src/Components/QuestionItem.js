@@ -1,26 +1,51 @@
 import React, { useState } from "react";
+import CommonToastFunctions from "../Common/CommonToastFunctions";
+import Swal from "sweetalert2";
 
 function QuestionItem({ question, questions, setQuestions, setAnswers }) {
   const [editingQuestion, setEditingQuestion] = useState(null);
   const [editedQuestionText, setEditedQuestionText] = useState("");
 
   const deleteQuestion = () => {
-    setQuestions(questions.filter((q) => q.id !== question.id));
-    const updatedAnswers = { ...setAnswers };
-    delete updatedAnswers[question.id];
-    setAnswers(updatedAnswers);
+
+
+
+
+    Swal.fire({
+      title: "Delete",
+      text: "Are you sure you want to delete?",
+      icon: "error",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        setQuestions(questions.filter((q) => q.id !== question.id));
+        const updatedAnswers = { ...setAnswers };
+        delete updatedAnswers[question.id];
+        setAnswers(updatedAnswers);
+     
+        CommonToastFunctions("error", "Successfully delete");
+      }
+    }).catch((err) => {
+      console.log(err, "err");
+    });
   };
 
   const editQuestion = () => {
     setEditingQuestion(question.id);
     setEditedQuestionText(question.text);
   };
-
+  
   const saveEditedQuestion = () => {
     setQuestions(
       questions.map((q) => (q.id === question.id ? { ...q, text: editedQuestionText } : q))
     );
     setEditingQuestion(null);
+    CommonToastFunctions("info", "Updated successfully!");
   };
 
   return (

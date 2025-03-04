@@ -44,7 +44,8 @@ function App() {
   const handleLogout = () => {
   
     Swal.fire({
-      title: "Are you sure you want to log out?",
+      title: "Log Out?",
+      text: "Are you sure you want to logout?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -55,11 +56,12 @@ function App() {
       if (result.isConfirmed) {
         localStorage.removeItem("user");
         setUser(null);
-        CommonToastFunctions("warning","Successfully logged out"); 
+        CommonToastFunctions("error", "Successfully logged out");
       }
     }).catch((err) => {
       console.log(err, "err");
     });
+    
  
   
   };

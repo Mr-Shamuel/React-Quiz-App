@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import QuestionItem from "./QuestionItem";
+import CommonToastFunctions from "../Common/CommonToastFunctions";
+import Swal from "sweetalert2";
 
 function QuestionManagement({ questions, setQuestions, setAnswers,quizStatus,setQuizStatus }) {
   const [newQuestion, setNewQuestion] = useState("");
@@ -8,12 +10,32 @@ function QuestionManagement({ questions, setQuestions, setAnswers,quizStatus,set
     if (newQuestion.trim()) {
       setQuestions([...questions, { id: Date.now(), text: newQuestion }]);
       setNewQuestion("");
+
+      CommonToastFunctions("success", "Successfully added");
     }
   };
 
 
   const handleCreateQuiz=()=>{
-     setQuizStatus({ ...quizStatus, quizCreated: true })
+   
+    Swal.fire({
+      title: "Create Quiz?",
+      text: "Are you sure you want to create a quiz?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setQuizStatus({ ...quizStatus, quizCreated: true });
+        CommonToastFunctions("success", "Quiz created successfully!");
+      }
+    }).catch((err) => {
+      console.log(err, "err");
+    });
+    
   }
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';  
 import { useNavigate } from 'react-router-dom';
+import CommonToastFunctions from '../Common/CommonToastFunctions';
 
 const LoginPage = ({ setUser }) => {
   const mockUser = [
@@ -24,8 +25,10 @@ const LoginPage = ({ setUser }) => {
       setUser(user); // Set state
       navigate(`/${user.role}`); // Redirect
       setError("");
+      CommonToastFunctions("success", "Successfully logged In");
     } else {
       setError("Invalid username or password");
+      CommonToastFunctions("error", "Invalid username or password");
     }
   };
 
