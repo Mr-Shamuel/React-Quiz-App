@@ -54,7 +54,7 @@ function AnswerManagement({
 
   return (
     <div className="mt-4">
-      {quizStatus?.quizCreated && <>
+      {quizStatus?.quizCreated ? <>
         <h4 className="mb-4 text-center text-primary">
           Answer Questions
           <button className="btn btn-success ms-3" onClick={handleSubmitQuiz}>
@@ -103,13 +103,15 @@ function AnswerManagement({
         ))}
 
       </>
+
+      : 
+
+      <h4 className="text-danger text-center">No Quiz Created</h4>
       }
-      {/* {quizStatus?.quizCreated == false && (
+      
+      {/* {quizStatus?.quizCreated === false && (
         <h4 className="text-danger text-center">No Quiz Created</h4>
       )} */}
-      {quizStatus?.quizCreated === false && (
-        <h4 className="text-danger text-center">No Quiz Created</h4>
-      )}
 
       {
         submitAns  && <CommonConfetti/>
