@@ -5,7 +5,7 @@ import CommonToastFunctions from '../Common/CommonToastFunctions';
 const LoginPage = ({ setUser }) => {
   const mockUser = [
     // { id: 1, userName: "admin", password: "admin123", role: "admin" },
-    { id: 1, userName: "cs130", password: "Cbl%1234", role: "admin" },
+    { id: 1, userName: "admin", password: "admin123", role: "admin" },
     { id: 2, userName: "user", password: "user123", role: "user" }
   ];
 
