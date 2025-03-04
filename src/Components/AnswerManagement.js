@@ -104,7 +104,10 @@ function AnswerManagement({
 
       </>
       }
-      {!quizStatus?.quizCreated    (
+      {/* {quizStatus?.quizCreated == false && (
+        <h4 className="text-danger text-center">No Quiz Created</h4>
+      )} */}
+      {quizStatus?.quizCreated === false && (
         <h4 className="text-danger text-center">No Quiz Created</h4>
       )}
 
