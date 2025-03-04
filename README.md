@@ -1,6 +1,19 @@
 # 📝 **Quiz App (React)**  
 
-A **role-based Quiz App** built with **React**, **Local Storage**, **Hooks**, **Bootstrap**, **Firebase Hosting**, **SweetAlert**, and **Twistify**, allowing **Admins** to manage questions and **Users** to submit and update answers.
+## 🔑 **Login Credentials**
+
+- **Admin Login**:
+  - **Username**: `admin`
+  - **Password**: `admin123`
+
+- **User Login**:
+  - **Username**: `user`
+  - **Password**: `user123`
+
+## 🎥 **Demo**
+
+- 🚀 **Live Demo**: [https://quiz-app121.web.app](https://quiz-app121.web.app)
+- 📂 **GitHub Repo**: [https://github.com/Mr-Shamuel/React-Quiz-App](https://github.com/Mr-Shamuel/React-Quiz-App)
 
 ## 🚀 **Features**
 
@@ -23,8 +36,3 @@ A **role-based Quiz App** built with **React**, **Local Storage**, **Hooks**, **
 - **UI Framework**: Bootstrap
 - **Hosting**: Firebase Hosting
 - **UI Enhancements**: SweetAlert, Twistify
-
-## 🎥 **Demo**
-
-- 🚀 **Live Demo**: [https://quiz-app121.web.app](https://quiz-app121.web.app)
-- 📂 **GitHub Repo**: [https://github.com/Mr-Shamuel/React-Quiz-App](https://github.com/Mr-Shamuel/React-Quiz-App)
