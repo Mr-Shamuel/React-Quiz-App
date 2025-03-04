@@ -36,3 +36,8 @@
 - **UI Framework**: Bootstrap
 - **Hosting**: Firebase Hosting
 - **UI Enhancements**: SweetAlert, Twistify
+
+## 🖼️ **Screenshots**
+ 
+![loginPage](https://github.com/user-attachments/assets/c6adf0ab-6c93-4aac-9282-fe1ed5182854)
+*Login page View* 
